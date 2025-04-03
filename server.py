@@ -50,6 +50,7 @@ def handle_dialog(res, req):
             sessionStorage[user_id]['first_name'] = first_name
             # создаём пустой массив, в который будем записывать города, которые пользователь уже отгадал
             sessionStorage[user_id]['guessed_cities'] = []
+            sessionStorage[user_id].setdefault('game_started', True)
             # как видно из предыдущего навыка, сюда мы попали, потому что пользователь написал своем имя.
             # Предлагаем ему сыграть и два варианта ответа "Да" и "Нет".
             res['response'][
@@ -103,6 +104,10 @@ def handle_dialog(res, req):
                     {
                         'title': 'Нет',
                         'hide': True
+                    },
+                    {
+                        'title': 'Помощь',
+                        'hide': False
                     }
                 ]
         else:

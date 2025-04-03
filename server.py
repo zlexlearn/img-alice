@@ -62,6 +62,10 @@ def handle_dialog(res, req):
                 {
                     'title': 'Нет',
                     'hide': True
+                },
+                {
+                    'title': 'Помощь',
+                    'hide': False
                 }
             ]
     else:
@@ -69,8 +73,10 @@ def handle_dialog(res, req):
         # В sessionStorage[user_id]['game_started'] хранится True или False в зависимости от того,
         # начал пользователь игру или нет.
         if not sessionStorage[user_id]['game_started']:
+            if 'помощь' in req['request']['nlu']['tokens']:
+                res['response']['text'] = 'Привет! я буду отправлять тебе фото городов, а ты должен угадать их название'
             # игра не начата, значит мы ожидаем ответ на предложение сыграть.
-            if 'да' in req['request']['nlu']['tokens']:
+            elif 'да' in req['request']['nlu']['tokens']:
                 # если пользователь согласен, то проверяем не отгадал ли он уже все города.
                 # По схеме можно увидеть, что здесь окажутся и пользователи, которые уже отгадывали города
                 if len(sessionStorage[user_id]['guessed_cities']) == 3:
